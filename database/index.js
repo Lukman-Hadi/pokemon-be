@@ -6,6 +6,16 @@ const db = mysql.createConnection({
     user: dbUSER,
     password: dbPASS,
     database: dbNAME,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+const pool = mysql.createPool({
+    host: dbHOST,
+    user: dbUSER,
+    password: dbPASS,
+    database: dbNAME,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
 // For pool initialization, see above
@@ -21,4 +31,4 @@ const db = mysql.createConnection({
 //     return;
 // })
 
-module.exports = db
+module.exports = {db,pool}

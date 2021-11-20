@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const db = require('../database')
+const {db} = require('../database')
 
 /**
  * Module dependencies.
