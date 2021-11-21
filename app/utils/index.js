@@ -1,9 +1,9 @@
 const isPrime = () => {
     let num = Math.floor(Math.random() * (100 - 1 + 1) + 1);
     for (let i = 2; i < num; i++) {
-        if (num % i === 0) return false;
+        if (num % i === 0) return {num,isOk:false};
     }
-    return num > 1;
+    return {num,isOk:num>1};
 }
 
 const fifteenPobaility = () => {
