@@ -1,4 +1,5 @@
 const { pool } = require('../../database');
+const util = require('util')
 
 const Pokemon = function (pokemon) {
     this.pokemon_id = pokemon.id;
@@ -17,6 +18,11 @@ Pokemon.getAll = (id, result) => {
         result(null, res);
     })
 };
+Pokemon.getLog = async (id) => {
+    promisePool = pool.promise();
+    const [rows] = await promisePool.query('SELECT COUNT(id) as count FROM renname_log WHERE mypokemon_id = ?', id);
+    return rows;
+}
 
 Pokemon.create = (newPokemon, result) => {
     pool.query('INSERT INTO user_pokemon SET ?', newPokemon, (err, res) => {
