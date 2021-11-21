@@ -18,8 +18,8 @@ Users.create = (newUsers, result) => {
     })
 }
 
-Users.login = (users, result) => {
-    pool.query('SELECT id,username,password FROM users where username = ?', users.username, (err, res) => {
+Users.login =(users, result) => {
+    pool.query('SELECT id,username,password FROM users where username = ?', users.username,async (err, res) => {
         if (err) {
             console.log(err);
             result(err, null);
@@ -29,8 +29,18 @@ Users.login = (users, result) => {
             console.log("found users: ", res[0]);
             if (bcrypt.compareSync(users.password, res[0].password)) {
                 delete res[0]['password'];
-                result(null, res[0]);
-                return;
+                let id = res[0].id;
+                const promisePool = pool.promise();
+                try{
+                    let [rows] = await promisePool.query('SELECT id,pokemon_id,name FROM user_pokemon WHERE user_id = ?',id);
+                    return result(null,[{user:res[0]},{pokemon:rows}])
+                }catch(err){
+                    console.log('err', err);
+                    result({ kind: "not_found" }, null);
+                    return
+                }
+                // result(null, res[0]);
+                // return;
             } else {
                 result({ kind: "not_found" }, null);
                 return;

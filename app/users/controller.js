@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const register = (req,res)=>{
     if(!req.body){
-        res.status(400).send({
+        return res.status(400).send({
             error:1,
             message: 'No data Provided'
         });
@@ -15,17 +15,17 @@ const register = (req,res)=>{
     })
     User.create(user,(err,data)=>{
         if(err){
-            res.status(500).send({
+            return res.status(500).send({
                 error:1,
                 message: err.message|| 'Some error occured'
             })
         }
-        res.send(data);
+        return res.send(data);
     })
 }
 const login = (req,res)=>{
     if(!req.body){
-        res.status(400).send({
+        return res.status(400).send({
             error:1,
             message: 'No data Provided'
         });
@@ -37,18 +37,18 @@ const login = (req,res)=>{
     User.login(payload,(err,data)=>{
         if(err){
             if(err.kind === 'not_found'){
-                res.status(404).send({
+                return res.status(404).send({
                     error:1,
-                    message: err.message|| 'Some error occured'
+                    message: err.message|| 'not Found'
                 })
             }else{
-                res.status(500).send({
+                return res.status(500).send({
                     error:1,
                     message: err.message|| 'Some error occured'
                 })
             }
         }
-        res.send(data);
+        return res.send(data);
     })
 }
 
