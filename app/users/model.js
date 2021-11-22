@@ -33,7 +33,7 @@ Users.login =(users, result) => {
                 const promisePool = pool.promise();
                 try{
                     let [rows] = await promisePool.query('SELECT id,pokemon_id,name FROM user_pokemon WHERE user_id = ?',id);
-                    return result(null,[{user:res[0]},{pokemon:rows}])
+                    return result(null,{users:res[0],pokemon:rows})
                 }catch(err){
                     console.log('err', err);
                     result({ kind: "not_found" }, null);

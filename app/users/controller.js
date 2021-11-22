@@ -48,7 +48,7 @@ const login = (req,res)=>{
                 })
             }
         }
-        return res.send(data);
+        return res.send({data:data});
     })
 }
 

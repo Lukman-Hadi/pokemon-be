@@ -1,8 +1,7 @@
 const { pool } = require('../../database');
-const util = require('util')
 
 const Pokemon = function (pokemon) {
-    this.pokemon_id = pokemon.id;
+    this.pokemon_id = pokemon.pokemon_id;
     this.user_id = pokemon.user_id;
     this.name = pokemon.name;
 }
@@ -19,7 +18,7 @@ Pokemon.getAll = (id, result) => {
     })
 };
 Pokemon.getLog = async (id) => {
-    promisePool = pool.promise();
+    const promisePool = pool.promise();
     const [rows] = await promisePool.query('SELECT COUNT(id) as count FROM renname_log WHERE mypokemon_id = ?', id);
     return rows;
 }
@@ -53,7 +52,7 @@ Pokemon.rename = (id, pokemon, result) => {
 }
 
 Pokemon.remove = (id, result) => {
-    sql.query("DELETE FROM user_pokemon WHERE id = ?", id, (err, res) => {
+    pool.query("DELETE FROM user_pokemon WHERE id = ?", id, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -65,7 +64,7 @@ Pokemon.remove = (id, result) => {
             return;
         }
 
-        console.log("deleted", pokemon);
+        console.log("deleted");
         result(null, res);
     });
 };
