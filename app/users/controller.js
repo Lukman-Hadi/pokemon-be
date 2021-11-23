@@ -20,7 +20,7 @@ const register = (req,res)=>{
                 message: err.message|| 'Some error occured'
             })
         }
-        return res.send(data);
+        return res.send({error:0,data,message:'Success go to login page'});
     })
 }
 const login = (req,res)=>{
