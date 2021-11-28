@@ -12,3 +12,4 @@ You will also see any lint errors in the console.
 install  all dependency
 ### import sql file
 with database name = test_web
+test edit with vscode.dev
